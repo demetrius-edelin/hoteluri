@@ -8,6 +8,8 @@ class Etaj
     protected $y;
     protected $numar;
     protected $camere;
+    protected $total_locuri = 0;
+    protected $ocupare_locuri = 0;
 
     public function __construct($numar, $x, $y)
     {
@@ -51,5 +53,42 @@ class Etaj
     public function adaugaCamera(Camera $camera)
     {
         $this->camere[$camera->getNumar()] = $camera;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalLocuri()
+    {
+        return $this->total_locuri;
+    }
+
+    /**
+     * @param mixed $total_locuri
+     */
+    public function setTotalLocuri($total_locuri)
+    {
+        $this->total_locuri = $total_locuri;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOcupareLocuri()
+    {
+        return $this->ocupare_locuri;
+    }
+
+    /**
+     * @param mixed $ocupare_locuri
+     */
+    public function setOcupareLocuri($ocupare_locuri)
+    {
+        $this->ocupare_locuri = $ocupare_locuri;
+    }
+
+    public function situatieOcupare()
+    {
+        return $this->ocupare_locuri . '/' . $this->total_locuri;
     }
 }

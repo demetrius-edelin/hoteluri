@@ -10,6 +10,7 @@ class Camera
     protected $x_end;
     protected $y_start;
     protected $y_end;
+    protected $ocupanti = [];
 
     public function __construct($numar, $locuri, $x_start, $x_end, $y_start, $y_end)
     {
@@ -69,5 +70,22 @@ class Camera
         return $this->y_end;
     }
 
+    public function adaugaOcupant(Ocupant $ocupant, $tip)
+    {
+        if (count($this->ocupanti) < $this->numar) {
+            $this->ocupanti[] = [
+                'ocupant' => $ocupant,
+                'tip'     => $tip
+            ];
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getOcupanti()
+    {
+        return $this->ocupanti;
+    }
 
 }

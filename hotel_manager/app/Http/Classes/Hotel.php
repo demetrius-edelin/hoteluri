@@ -6,9 +6,13 @@ class Hotel
 {
     protected $etaje = [];
     protected $nume;
+    protected $id;
+    protected $total_locuri = 0;
+    protected $ocupare_locuri = 0;
 
-    public function __construct($nume)
+    public function __construct($id, $nume)
     {
+        $this->id = $id;
         $this->nume = $nume;
     }
 
@@ -33,4 +37,48 @@ class Hotel
         return $this->nume;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalLocuri()
+    {
+        return $this->total_locuri;
+    }
+
+    /**
+     * @param int $total_locuri
+     */
+    public function setTotalLocuri($total_locuri)
+    {
+        $this->total_locuri = $total_locuri;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOcupareLocuri()
+    {
+        return $this->ocupare_locuri;
+    }
+
+    /**
+     * @param int $ocupare_locuri
+     */
+    public function setOcupareLocuri($ocupare_locuri)
+    {
+        $this->ocupare_locuri = $ocupare_locuri;
+    }
+
+    public function situatieOcupare()
+    {
+        return $this->ocupare_locuri . '/' . $this->total_locuri;
+    }
 }

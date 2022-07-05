@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Display;
+use App\Http\Controllers\Form;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Display::class, 'show']);
+Route::get('/ajaxForm', [Form::class, 'show']);
+Route::post('/getOcupare', [Form::class, 'getOcupare']);
