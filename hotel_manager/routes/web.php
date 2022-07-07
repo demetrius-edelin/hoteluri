@@ -16,5 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [Display::class, 'show']);
-Route::get('/ajaxForm', [Form::class, 'show']);
 Route::post('/getOcupare', [Form::class, 'getOcupare']);
+Route::post('/salvareOcupare', [Form::class, 'salvareOcupare']);
+Route::post('/stergereOcupare', [Form::class, 'stergereOcupare']);
+Route::post('/modificaZiuaCurenta', [Form::class, 'modificaZiuaCurenta']);

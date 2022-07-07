@@ -4,6 +4,7 @@ namespace App\Http\Classes;
 
 class Ocupant
 {
+    protected $id;
     protected $nume;
     protected $prenume;
     protected $an_curs;
@@ -20,8 +21,9 @@ class Ocupant
      * @param $tara
      * @param $premiu
      */
-    public function __construct($nume, $prenume, $an_curs = '', $oras = '', $tara = '', $telefon = '', $premiu = 0)
+    public function __construct($id, $nume, $prenume, $an_curs = '', $oras = '', $tara = '', $telefon = '', $premiu = 0)
     {
+        $this->id = $id;
         $this->nume = $nume;
         $this->prenume = $prenume;
         $this->an_curs = $an_curs;
@@ -29,6 +31,14 @@ class Ocupant
         $this->tara = $tara;
         $this->telefon = $telefon;
         $this->premiu = $premiu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

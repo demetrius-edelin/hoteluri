@@ -2,6 +2,8 @@
 
 namespace App\Http\Classes;
 
+use App\Data;
+
 class Camera
 {
     protected $numar;
@@ -70,12 +72,17 @@ class Camera
         return $this->y_end;
     }
 
-    public function adaugaOcupant(Ocupant $ocupant, $tip)
+    public function adaugaOcupant(Ocupant $ocupant, $loc, $tip, $achitat, $perioada_start, $perioada_end)
     {
         if (count($this->ocupanti) < $this->numar) {
-            $this->ocupanti[] = [
+            $this->ocupanti[$loc] = [
                 'ocupant' => $ocupant,
-                'tip'     => $tip
+                'tip'     => $tip,
+                'achitat' => $achitat,
+                'perioada_start' => $perioada_start,
+                'perioada_end' => $perioada_end,
+                'perioada_start_formatata' => Data::convertDBDateToHuman($perioada_start),
+                'perioada_end_formatata' => Data::convertDBDateToHuman($perioada_end)
             ];
         }
     }

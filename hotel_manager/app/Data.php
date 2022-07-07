@@ -924,7 +924,7 @@ class Data
 
     public static function getStructure()
     {
-        $ocupari = DB::select('select * from ocupare o join persoane p on p.id=o.persoana_id;');
+        $ocupari = DB::select('select * from ocupare o join persoane p on p.id = o.persoana_id where o.perioada_start <= "' . session('ziuaCurenta') . '" and o.perioada_end >= "' . session('ziuaCurenta') . '";');
 
         $ocupareDb = [];
         foreach ($ocupari as $ocupare) {
@@ -958,6 +958,7 @@ class Data
                     if (isset($ocupareDb[$hotel->getId()][$etajNumar][$cameraNumar])) {
                         foreach ($ocupareDb[$hotel->getId()][$etajNumar][$cameraNumar] as $ocupant) {
                             $camera->adaugaOcupant(new Ocupant(
+                                $ocupant->id,
                                 $ocupant->nume,
                                 $ocupant->prenume,
                                 $ocupant->an_curs,
@@ -965,7 +966,7 @@ class Data
                                 $ocupant->tara,
                                 $ocupant->telefon,
                                 $ocupant->premiu
-                            ), $ocupant->tip);
+                            ), $ocupant->loc, $ocupant->tip, $ocupant->achitat, $ocupant->perioada_start, $ocupant->perioada_end);
 
                             $hotelOcupareLocuri++;
                             $etajOcupareLocuri++;
@@ -986,5 +987,25 @@ class Data
         }
 
         return $hotels;
+    }
+
+    static public function convertDBDateToHuman ($DBDate)
+    {
+        $parts = explode('-', $DBDate);
+        if (count($parts) > 1) {
+            return $parts[2] . '.' . $parts[1] . '.' . $parts[0];
+        }
+
+        return $DBDate;
+    }
+
+    static public function convertHumanDateToDB ($HumanDate)
+    {
+        $parts = explode('.', $HumanDate);
+        if (count($parts) > 1) {
+            return $parts[2] . '-' . $parts[1] . '-' . $parts[0];
+        }
+
+        return $DBDate;
     }
 }
