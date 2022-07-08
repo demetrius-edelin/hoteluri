@@ -43,18 +43,25 @@
                     @foreach($etaj->getCamere() as $camera)
                         <div class='camera' id='camera_{{ $etaj->getNumar() }}_{{ $camera->getNumar() }}' style='grid-column-start: {{ $camera->getXStart() }}; grid-column-end: {{ $camera->getXEnd() }}; grid-row-start: {{ $camera->getYStart() }}; grid-row-end: {{ $camera->getYEnd() }}; grid-template-rows: {{ $camera->getLocuri() + 1 }}'><div class='numar-camera' style='grid-column-start: 1; grid-column-end: 2; grid-row-start: 1; grid-row-end: 2;'>Camera {{ $camera->getNumar() }}</div>
                             @for($i = 1; $i < $camera->getLocuri() + 1; $i++)
-                                <div href="#test-popup" id="camera_{{ $hotel->getId() }}_{{ $etaj->getNumar() }}_{{ $camera->getNumar() }}_{{ $i - 1 }}" data-etaj="{{ $etaj->getNumar() }}" data-camera="{{ $camera->getNumar() }}" data-loc="{{ $i }}"
+                                <div href="#test-popup" id="camera_{{ $hotel->getId() }}_{{ $etaj->getNumar() }}_{{ $camera->getNumar() }}_{{ $i - 1 }}"
+                                     data-etaj="{{ $etaj->getNumar() }}" data-camera="{{ $camera->getNumar() }}" data-loc="{{ $i }}"
+
                                     @if(isset($camera->getOcupanti()[$i - 1]))
                                     data-tippy-content="
                                     <h6>{{ $camera->getOcupanti()[$i - 1]['ocupant']->getNume() }} {{ $camera->getOcupanti()[$i - 1]['ocupant']->getprenume() }}</h6>
                                     Anul {{ $camera->getOcupanti()[$i - 1]['ocupant']->getAnCurs() }}, Oraș {{ $camera->getOcupanti()[$i - 1]['ocupant']->getOras() }}<br>
-                                    <strong>{{ $camera->getOcupanti()[$i - 1]['perioada_start_formatata'] }} - {{ $camera->getOcupanti()[$i - 1]['perioada_end_formatata'] }}</strong>
+                                    <strong>{{ $camera->getOcupanti()[$i - 1]['perioada_start_formatata'] }} - {{ $camera->getOcupanti()[$i - 1]['perioada_end_formatata'] }} (pleacă {{ $camera->getOcupanti()[$i - 1]['perioada_end_formatata_plus_unu'] }},{{ $camera->getOcupanti()[$i - 1]['zile'] }} nopți)</strong>
                                     "
-                                    @endif class='locatar
+                                    @endif
+
+                                     class='locatar position-relative
                                     @if(isset($camera->getOcupanti()[$i - 1]) && $camera->getOcupanti()[$i - 1]['tip'] == 'plata') loc_ocupat_platitor tippy-popup
                                     @elseif (isset($camera->getOcupanti()[$i - 1]) && $camera->getOcupanti()[$i - 1]['tip'] == 'gratuit') loc_ocupat_gratuit tippy-popup
                                     @else loc-liber
-                                    @endif' style='grid-column-start: 1; grid-column-end: 2; grid-row-start: {{ $i + 1 }}; grid-row-end: {{ $i + 2 }}; border-top: 1px solid grey'>&#10148; @if(isset($camera->getOcupanti()[$i - 1])) {{ $camera->getOcupanti()[$i - 1]['ocupant']->getNume() }} {{ $camera->getOcupanti()[$i - 1]['ocupant']->getprenume() }} @endif</div>
+                                    @endif'
+                                     style='grid-column-start: 1; grid-column-end: 2; grid-row-start: {{ $i + 1 }}; grid-row-end: {{ $i + 2 }}; border-top: 1px solid grey'><img src="img/cal.png" width="18px" class="calendar-loc" id="calendar-loc_{{ $hotel->getId() }}_{{ $etaj->getNumar() }}_{{ $camera->getNumar() }}_{{ $i - 1 }}" > @if(isset($camera->getOcupanti()[$i - 1])) {{ $camera->getOcupanti()[$i - 1]['ocupant']->getNume() }} {{ $camera->getOcupanti()[$i - 1]['ocupant']->getprenume() }}
+                                    <div class="position-absolute end-0 translate-middle-y top-50">@if($camera->getOcupanti()[$i - 1]['tip'] == 'plata') @if($camera->getOcupanti()[$i - 1]['achitat'] == 1)<span class="loc-actions fs-6 me-1" title="Achitat">&#10003;</span>@else <span class="loc-actions me-1" style="font-size: 0.9rem !important;" title="Neachiat">&#9888;</span> @endif @endif  </div>
+                                    @endif</div>
                             @endfor
                         </div>
                     @endforeach

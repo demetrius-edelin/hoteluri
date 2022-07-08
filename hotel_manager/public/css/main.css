@@ -127,3 +127,13 @@
         transform: rotate(360deg);
     }
 }
+
+.calendar-loc {
+    cursor: pointer;
+    padding-bottom: 4px;
+    margin-left: 4px;
+}
+
+.muta-toggle {
+    display: none;
+}

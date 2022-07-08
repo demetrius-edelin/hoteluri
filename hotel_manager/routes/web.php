@@ -19,4 +19,7 @@ Route::get('/', [Display::class, 'show']);
 Route::post('/getOcupare', [Form::class, 'getOcupare']);
 Route::post('/salvareOcupare', [Form::class, 'salvareOcupare']);
 Route::post('/stergereOcupare', [Form::class, 'stergereOcupare']);
+Route::post('/ocupaTot', [Form::class, 'ocupaTot']);
+Route::post('/muta', [Form::class, 'muta']);
 Route::post('/modificaZiuaCurenta', [Form::class, 'modificaZiuaCurenta']);
+Route::post('/getDateRangeLoc', [Form::class, 'getDateRangeLoc']);
