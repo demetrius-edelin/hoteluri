@@ -44,6 +44,7 @@ $(document).ready(function() {
             });
 
     });
+
     $('.locatar').click(function() {
         var token = $("#token").attr('data-token');
         let that = this;
@@ -103,6 +104,7 @@ $(document).ready(function() {
                                 const response = JSON.parse(data);
                                 if (response['status'] === 'failed') {
                                     alert('Ștergere eșuată. EROARE: ' +response['data']);
+                                    $(".form-button").removeAttr('disabled');
                                 } else {
                                     $.magnificPopup.close();
                                     $(".overlay").show();
@@ -123,6 +125,7 @@ $(document).ready(function() {
                                 const response = JSON.parse(data);
                                 if (response['status'] === 'failed') {
                                     alert('Ocupare eșuată. EROARE: ' +response['data']);
+                                    $(".form-button").removeAttr('disabled');
                                 } else {
                                     $.magnificPopup.close();
                                     $(".overlay").show();
@@ -140,9 +143,31 @@ $(document).ready(function() {
                     $('.muta-toggle').show();
                 });
 
+                $("#button-muta-trimite").click(function () {
+                    $(".form-button").attr('disabled', 'disabled');
+                    $.post("muta", $("#form").serialize())
+                        .done(function (data) {
+                            const response = JSON.parse(data);
+                            if (response['status'] === 'failed') {
+                                alert('Ocupare eșuată. EROARE: ' +response['data']);
+                                $(".form-button").removeAttr('disabled');
+                            } else {
+                                $.magnificPopup.close();
+                                $(".overlay").show();
+                                localStorage.setItem("etaj_id", 'Rai-' + $('#muta-etaje').val() + '-tab');
+                                location.reload();
+                            }
+                        })
+                        .fail(function(error) {
+                            console.log( error );
+                        })
+                });
+
                 // schimbă selectia de camere și locuri la schimbare etaj [MUTĂ]
                 $("#muta-etaje").change(function() {
-                    let camere = Object.keys(structuraHotel[1][$(this).val()]);
+                    let camere = Object.keys(structuraHotel[1][$(this).val()]).sort(function(a, b) {
+                        return a - b;
+                    });
                     var camereOptions = '';
                     var primaCamera = 0;
                     camere.forEach((i) => {

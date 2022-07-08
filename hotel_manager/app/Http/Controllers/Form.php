@@ -24,6 +24,10 @@ class Form extends Controller
                     $structuraHotel[$hotel->getId()][$etaj->getNumar()][$camera->getNumar()] = $camera->getLocuri();
                 }
             }
+            foreach ($structuraHotel[$hotel->getId()] as $etajNumar => $etajUnsorted) {
+                ksort($etajUnsorted);
+                $structuraHotel[$hotel->getId()][$etajNumar] = $etajUnsorted;
+            }
         }
 
         $camera = $hotels[$idData[1]]->getEtaje()[$idData[2]]->getCamere()[$idData[3]];
@@ -375,4 +379,105 @@ class Form extends Controller
         return $zileOcupate;
     }
 
+    public function muta(Request $request)
+    {
+        $ocupare = [];
+        $ocupare["persoana_id"] = $request->input('persoana_id');
+        $ocupare["nume"] = $request->input('nume');
+        $ocupare["prenume"] = $request->input('prenume');
+        $ocupare["an_curs"] = $request->input('an_curs');
+        $ocupare["oras"] = $request->input('oras');
+        $ocupare["tara"] = $request->input('tara');
+        $ocupare["telefon"] = $request->input('telefon');
+        $ocupare["tip"] = $request->input('tip');
+        $ocupare["hotel"] = $request->input('hotel');
+        $ocupare["etaj"] = $request->input('etaj');
+        $ocupare["camera"] = $request->input('camera');
+        $ocupare["loc"] = $request->input('loc');
+        $ocupare["achitat"] = $request->input('achitat');
+        $ocupare["muta-etaje"] = $request->input('muta-etaje');
+        $ocupare["muta-camere"] = $request->input('muta-camere');
+        $ocupare["muta-locuri"] = $request->input('muta-locuri');
+        $ocupare["perioada_start"] = Data::convertHumanDateToDB($request->input('perioada_start'));
+        $ocupare["perioada_end"] = Data::convertHumanDateToDB($request->input('perioada_end'));
+
+        try {
+            // verificare loc liber
+            $ocupareIntervalDB = DB::select('select * from ocupare where hotel_id = ? and
+                            etaj_numar = ? and
+                            camera_numar = ? and
+                            loc = ? and
+                            (perioada_start <= ? and perioada_end >= ?) and
+                            persoana_id != ?', [
+                $ocupare['hotel'],
+                $ocupare['muta-etaje'],
+                $ocupare['muta-camere'],
+                $ocupare['muta-locuri'],
+                $ocupare["perioada_end"],
+                $ocupare["perioada_start"],
+                $ocupare['persoana_id']
+            ]);
+
+            if (count($ocupareIntervalDB) > 0) {
+                return json_encode([
+                    'status' => 'failed',
+                    'data' => 'Intervalul nu este liber!'
+                ]);
+            }
+
+            DB::update('update persoane set
+                    nume = ?,
+                    prenume = ?,
+                    an_curs = ?,
+                    oras = ?,
+                    tara = ?,
+                    telefon = ?
+                    where id = ?', [
+                $ocupare['nume'],
+                $ocupare['prenume'],
+                $ocupare['an_curs'],
+                $ocupare['oras'],
+                $ocupare['tara'],
+                $ocupare['telefon'],
+                $ocupare['persoana_id']
+            ]);
+
+            DB::update('update ocupare set
+                    tip = ?,
+                    achitat = ?,
+                    perioada_start = ?,
+                    perioada_end = ?,
+                    etaj_numar = ?,
+                    camera_numar = ?,
+                    loc = ?
+                    where hotel_id = ? and
+                    etaj_numar = ? and
+                    camera_numar = ? and
+                    loc = ? and
+                    persoana_id = ?', [
+                $ocupare['tip'],
+                $ocupare['achitat'],
+                $ocupare['perioada_start'],
+                $ocupare['perioada_end'],
+                $ocupare['muta-etaje'],
+                $ocupare['muta-camere'],
+                $ocupare['muta-locuri'],
+                $ocupare['hotel'],
+                $ocupare['etaj'],
+                $ocupare['camera'],
+                $ocupare['loc'],
+                $ocupare['persoana_id']
+            ]);
+        } catch (\Exception $e) {
+            return json_encode([
+                'status' => 'failed',
+                'data' => $e->getMessage()
+            ]);
+        }
+
+        return json_encode([
+            'status' => 'success',
+            'data' => 1
+        ]);
+    }
 }

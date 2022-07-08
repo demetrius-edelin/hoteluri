@@ -130,7 +130,7 @@
         </select>
     </div>
     <div class="col-sm-2 muta-toggle position-relative">
-        <button type="button" id="button-muta"
+        <button type="button" id="button-muta-trimite"
                 class="form-button btn btn-info btn-sm fw-bold position-absolute bottom-0 start-0 mb-1">Mută acum
         </button>
     </div>

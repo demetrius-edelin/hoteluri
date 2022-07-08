@@ -23,3 +23,4 @@ Route::post('/ocupaTot', [Form::class, 'ocupaTot']);
 Route::post('/muta', [Form::class, 'muta']);
 Route::post('/modificaZiuaCurenta', [Form::class, 'modificaZiuaCurenta']);
 Route::post('/getDateRangeLoc', [Form::class, 'getDateRangeLoc']);
+Route::post('/muta', [Form::class, 'muta']);
