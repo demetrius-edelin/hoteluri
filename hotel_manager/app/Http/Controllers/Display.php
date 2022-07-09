@@ -31,8 +31,12 @@ class Display extends Controller
             }
         }
 
+        if (session('structura') == '') {
+            session(['structura' => Data::getStructure()]);
+        }
+
         return view('display', [
-            'hotels' => Data::getStructure(),
+            'hotels' => session('structura'),
             'ziuaCurenta' => session('ziuaCurenta')
         ]);
     }

@@ -17,7 +17,7 @@ class Form extends Controller
     public function getOcupare(Request $request)
     {
         $idData = explode('_', $request->input('id')); // hotel_etaj_camera_loc
-        $hotels = Data::getStructure();
+        $hotels = session('structura');
 
         $structuraHotel = [];
         foreach ($hotels as $hotel) {
@@ -74,7 +74,7 @@ class Form extends Controller
 
     public function salvareOcupare(Request $request)
     {
-        $structura = Data::getStructure();
+        $structura = session('structura');
 
         $ocupare = [];
         $ocupare["persoana_id"] = $request->input('persoana_id');
@@ -133,7 +133,7 @@ class Form extends Controller
                 ]);
                 $ocupare['persoana_id'] = DB::getPdo()->lastInsertId();
 
-                if ($request->input('multipleSelection') == 1) {
+                if ($request->input('multipleSelection') == ''  || $request->input('multipleSelection') < 2) {
                     DB::insert('insert into ocupare (hotel_id, etaj_numar, camera_numar, loc, tip, persoana_id, achitat, perioada_start, perioada_end) values(?, ?, ?, ?, ?, ?, ? ,?, ?)', [
                         $ocupare['hotel'],
                         $ocupare['etaj'],
@@ -329,7 +329,7 @@ class Form extends Controller
                 $locuriOcupate[] = $ocupareDB->loc;
             }
 
-            $structura = Data::getStructure();
+            $structura = session('structura');
 
             $camera = $structura[$ocupare['hotel']]->getEtaje()[$ocupare['etaj']]->getCamere()[$ocupare['camera']];
 
