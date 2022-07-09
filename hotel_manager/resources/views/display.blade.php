@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <title>Hotel Rai</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/magnific-popup.css">
     <link id="bsdp-css" href="css/bootstrap-datepicker3.min.css" rel="stylesheet">
@@ -18,11 +19,17 @@
 
 <body>
 <div id="main-div">
-    <h2>Hotel {{ array_values($hotels)[0]->getNume() }} ({{ array_values($hotels)[0]->situatieOcupare() }})<br><br></h2>
+    <h2>Hotel {{ array_values($hotels)[0]->getNume() }}: {{ array_values($hotels)[0]->situatieOcupare() }}<br><br></h2>
     <div class="row mb-4">
         <label for="filtru-data" class="col-sm-1 col-form-label-lg">Data:</label>
         <div class="col-sm-2" id="filtru-data-container">
             <input type="text" class="form-control" id="filtru-data" readonly>
+        </div>
+        <div class="col-sm-7"></div>
+        <div class="col-sm-2">
+            <a href="\exportaZiua" id="button-export"
+                    class="btn btn-sm btn-info">Exportă ziua
+            </a>
         </div>
     </div>
 

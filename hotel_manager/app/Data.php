@@ -935,6 +935,7 @@ class Data
         foreach (self::$hoteluri as $hotelName => $hotelContent) {
             $hotelTotalLocuri = 0;
             $hotelOcupareLocuri = 0;
+            $hotelOcupareLocuriGratuite = 0;
             $hotel = new Hotel($hotelContent['id'], $hotelName);
 
             foreach ($hotelContent['etaje'] as $etajNumar => $etajContent) {
@@ -969,6 +970,9 @@ class Data
                             ), $ocupant->loc, $ocupant->tip, $ocupant->achitat, $ocupant->perioada_start, $ocupant->perioada_end);
 
                             $hotelOcupareLocuri++;
+                            if ($ocupant->tip == 'gratuit') {
+                                $hotelOcupareLocuriGratuite++;
+                            }
                             $etajOcupareLocuri++;
                         }
                     };
@@ -982,6 +986,7 @@ class Data
             }
             $hotel->setTotalLocuri($hotelTotalLocuri);
             $hotel->setOcupareLocuri($hotelOcupareLocuri);
+            $hotel->setOcupareLocuriGratuite($hotelOcupareLocuriGratuite);
 
             $hotels[$hotelContent['id']] = $hotel;
         }

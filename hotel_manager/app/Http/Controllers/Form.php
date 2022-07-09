@@ -8,7 +8,9 @@ use App\Http\Classes\Etaj;
 use App\Http\Classes\Hotel;
 use App\Http\Classes\Ocupant;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class Form extends Controller
 {
@@ -56,6 +58,7 @@ class Form extends Controller
         ) {
             $poateLuaCamera = true;
         }
+
         return view('form-ajax', [
             'structuraHotel' => $structuraHotel,
             'ocupare' => $ocupare,
@@ -157,6 +160,8 @@ class Form extends Controller
                         ]);
                     }
                 }
+
+                Log::channel('actiuni')->info('Creat ocupant nou', $ocupare);
             } else {
                 // verificare loc liber
                 $ocupareIntervalDB = DB::select('select * from ocupare where hotel_id = ? and
@@ -218,8 +223,12 @@ class Form extends Controller
                     $ocupare['loc'],
                     $ocupare['persoana_id']
                 ]);
+
+                Log::channel('actiuni')->info('Updatat ocupant', $ocupare);
             }
         } catch (\Exception $e) {
+            Log::channel('actiuni')->info('ERROARE! Creat/updatat ocupant eșuată. ' . $e->getMessage(), $ocupare);
+
             return json_encode([
                 'status' => 'failed',
                 'data' => $e->getMessage()
@@ -261,6 +270,8 @@ class Form extends Controller
                 $ocupare['loc']
             ]);
 
+            Log::channel('actiuni')->info('Ștergere ocupare', $ocupare);
+
             // șterge și persoana dacă nu mai are ocupări
             $alteocupariPersoana = DB::select('select * from ocupare where persoana_id = ?', [$ocupare['persoana_id']]);
             if (count($alteocupariPersoana) < 1) {
@@ -268,8 +279,13 @@ class Form extends Controller
                     where id = ?', [
                     $ocupare['persoana_id']
                 ]);
+
+                Log::channel('actiuni')->info('Ștergere și persoană', $alteocupariPersoana);
             }
+
         } catch (\Exception $e) {
+            Log::channel('actiuni')->info('ERROARE! Ștergere eșuată. ' . $e->getMessage(), $ocupare);
+
             return json_encode([
                 'status' => 'failed',
                 'data' => $e->getMessage()
@@ -332,7 +348,11 @@ class Form extends Controller
                     ]);
                 }
             }
+
+            Log::channel('actiuni')->info('Ocupare totală', $ocupare);
         } catch (\Exception $e) {
+            Log::channel('actiuni')->info('ERROARE! Ocupare totală eșuată. ' . $e->getMessage(), $ocupare);
+
             return json_encode([
                 'status' => 'failed',
                 'data' => $e->getMessage()
@@ -468,7 +488,11 @@ class Form extends Controller
                 $ocupare['loc'],
                 $ocupare['persoana_id']
             ]);
+
+            Log::channel('actiuni')->info('Mutare ocupare (si posibil update)', $ocupare);
         } catch (\Exception $e) {
+            Log::channel('actiuni')->info('ERROARE! Mutare eșuată. ' . $e->getMessage(), $ocupare);
+
             return json_encode([
                 'status' => 'failed',
                 'data' => $e->getMessage()
@@ -479,5 +503,33 @@ class Form extends Controller
             'status' => 'success',
             'data' => 1
         ]);
+    }
+
+    public function exportaZiua(Request $request)
+    {
+        $ocupari = DB::select('select * from ocupare o join persoane p on p.id = o.persoana_id where o.perioada_start <= "' . session('ziuaCurenta') . '" and o.perioada_end >= "' . session('ziuaCurenta') . '";');
+
+        $ocupariArray = array_map(function ($value) {
+            return (array)$value;
+        }, $ocupari);
+
+        $filename = storage_path('logs/exporta_ziua.csv');
+        $handle = fopen($filename, 'w+');
+
+        if (count($ocupariArray) > 0) {
+            fputcsv($handle, array_keys($ocupariArray[0]));
+        }
+
+        foreach($ocupariArray as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+
+        return response()->download($filename, 'export.csv', $headers);
     }
 }

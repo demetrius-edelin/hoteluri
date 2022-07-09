@@ -9,6 +9,7 @@ class Hotel
     protected $id;
     protected $total_locuri = 0;
     protected $ocupare_locuri = 0;
+    protected $ocupare_locuri_gratuite = 0;
 
     public function __construct($id, $nume)
     {
@@ -79,6 +80,22 @@ class Hotel
 
     public function situatieOcupare()
     {
-        return $this->ocupare_locuri . '/' . $this->total_locuri;
+        return $this->ocupare_locuri . '/' . $this->total_locuri . ' (' . $this->ocupare_locuri_gratuite . 'g + ' . ($this->ocupare_locuri - $this->ocupare_locuri_gratuite) . 'p)';
+    }
+
+    /**
+     * @param int $ocupare_locuri_gratuite
+     */
+    public function setOcupareLocuriGratuite($ocupare_locuri_gratuite)
+    {
+        $this->ocupare_locuri_gratuite = $ocupare_locuri_gratuite;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOcupareLocuriGratuite()
+    {
+        return $this->ocupare_locuri_gratuite;
     }
 }

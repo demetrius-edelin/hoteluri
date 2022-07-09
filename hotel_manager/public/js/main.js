@@ -244,4 +244,23 @@ $(document).ready(function() {
             })
     });
 
+    $("#button-export").click(function () {
+        $.post("exportaZiua")
+            .done(function (data) {
+                const response = JSON.parse(data);
+                if (response['status'] === 'failed') {
+                    alert('Ocupare eșuată. EROARE: ' +response['data']);
+                    $(".form-button").removeAttr('disabled');
+                } else {
+                    $.magnificPopup.close();
+                    $(".overlay").show();
+                    localStorage.setItem("etaj_id", 'Rai-' + $('#muta-etaje').val() + '-tab');
+                    location.reload();
+                }
+            })
+            .fail(function(error) {
+                console.log( error );
+            })
+    });
+
 });
