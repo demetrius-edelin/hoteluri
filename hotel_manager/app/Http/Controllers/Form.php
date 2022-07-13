@@ -507,24 +507,9 @@ class Form extends Controller
 
     public function exportaZiua(Request $request)
     {
-        $ocupari = DB::select('select * from ocupare o join persoane p on p.id = o.persoana_id where o.perioada_start <= "' . session('ziuaCurenta') . '" and o.perioada_end >= "' . session('ziuaCurenta') . '";');
+        Data::generareCsvZiua();
 
-        $ocupariArray = array_map(function ($value) {
-            return (array)$value;
-        }, $ocupari);
-
-        $filename = storage_path('logs/exporta_ziua.csv');
-        $handle = fopen($filename, 'w+');
-
-        if (count($ocupariArray) > 0) {
-            fputcsv($handle, array_keys($ocupariArray[0]));
-        }
-
-        foreach($ocupariArray as $row) {
-            fputcsv($handle, $row);
-        }
-
-        fclose($handle);
+        $filename = storage_path('logs/exporta_ziua_' . date("Y-m-d") . '.csv');
 
         $headers = array(
             'Content-Type' => 'text/csv',

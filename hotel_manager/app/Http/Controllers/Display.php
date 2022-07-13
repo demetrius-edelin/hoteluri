@@ -20,12 +20,19 @@ class Display extends Controller
 
         if (env('BACKUP_EXTERNAL') == 'true') {
             $backupDBHdd = env('BACKUP_PATH') . '\hoteluri_' . date("Y-m-d") . '.sql';
+            $backupDBCsvHdd = env('BACKUP_PATH') . '\exporta_ziua_' . date("Y-m-d") . '.csv';
             $backupLogsHdd = env('BACKUP_PATH') . '\actiuni.log';
+
             if (!is_dir(env('BACKUP_PATH'))) {
                 mkdir(env('BACKUP_PATH'));
             }
-            if (!file_exists($backupDBHdd) || !file_exists($backupLogsHdd)) {
+            if (!file_exists($backupDBHdd)) {
                 copy($backupFile, $backupDBHdd);
+            }
+            if (!file_exists($backupDBCsvHdd)) {
+                copy(storage_path('logs\exporta_ziua_' . date("Y-m-d") . '.csv'), $backupDBCsvHdd);
+            }
+            if (!file_exists($backupLogsHdd)) {
                 copy(storage_path('logs\actiuni.log'), $backupLogsHdd);
             }
         }

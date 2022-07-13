@@ -1648,4 +1648,25 @@ class Data
 
         return $HumanDate;
     }
+
+    public static function generareCsvZiua() {
+        $ocupari = DB::select('select * from ocupare o join persoane p on p.id = o.persoana_id where o.hotel_id = ' . env('ACTIVE_HOTEL_ID') . ' and o.perioada_start <= "' . session('ziuaCurenta') . '" and o.perioada_end >= "' . session('ziuaCurenta') . '";');
+
+        $ocupariArray = array_map(function ($value) {
+            return (array)$value;
+        }, $ocupari);
+
+        $filename = storage_path('logs/exporta_ziua_' . date("Y-m-d") . '.csv');
+        $handle = fopen($filename, 'w+');
+
+        if (count($ocupariArray) > 0) {
+            fputcsv($handle, array_keys($ocupariArray[0]));
+        }
+
+        foreach($ocupariArray as $row) {
+            fputcsv($handle, $row);
+        }
+
+        fclose($handle);
+    }
 }
