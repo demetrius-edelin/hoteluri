@@ -154,7 +154,7 @@ $(document).ready(function() {
                             } else {
                                 $.magnificPopup.close();
                                 $(".overlay").show();
-                                localStorage.setItem("etaj_id", 'Rai-' + $('#muta-etaje').val() + '-tab');
+                                localStorage.setItem("etaj_id", numeHotelSelectat + '-' + $('#muta-etaje').val() + '-tab');
                                 location.reload();
                             }
                         })
@@ -165,7 +165,7 @@ $(document).ready(function() {
 
                 // schimbă selectia de camere și locuri la schimbare etaj [MUTĂ]
                 $("#muta-etaje").change(function() {
-                    let camere = Object.keys(structuraHotel[1][$(this).val()]).sort(function(a, b) {
+                    let camere = Object.keys(structuraHotel[hotelSelectat][$(this).val()]).sort(function(a, b) {
                         return a - b;
                     });
                     var camereOptions = '';
@@ -176,13 +176,13 @@ $(document).ready(function() {
                             selected = 'selected';
                             primaCamera = i;
                         }
-                        if (structuraHotel[1][$(this).val()][i] > 0) {
+                        if (structuraHotel[hotelSelectat][$(this).val()][i] > 0) {
                             camereOptions += '<option value="' + i + '" ' + selected + '>' + i + '</option>';
                         }
                     });
 
                     var locuriOption = '';
-                    for (var i = 0; i < structuraHotel[1][$(this).val()][primaCamera]; i++) {
+                    for (var i = 0; i < structuraHotel[hotelSelectat][$(this).val()][primaCamera]; i++) {
                         locuriOption += '<option value="' + i + '" ' + (i === 0 ? 'selected' : '') + '>' + (i + 1) + '</option>';
                     }
 
@@ -195,7 +195,7 @@ $(document).ready(function() {
                     let etaj = $('#muta-etaje').val();
 
                     var locuriOption = '';
-                    for (var i = 0; i < structuraHotel[1][etaj][$(this).val()]; i++) {
+                    for (var i = 0; i < structuraHotel[hotelSelectat][etaj][$(this).val()]; i++) {
                         locuriOption += '<option value="' + i + '" ' + (i === 0 ? 'selected' : '') + '>' + (i + 1) + '</option>';
                     }
 
@@ -254,7 +254,7 @@ $(document).ready(function() {
                 } else {
                     $.magnificPopup.close();
                     $(".overlay").show();
-                    localStorage.setItem("etaj_id", 'Rai-' + $('#muta-etaje').val() + '-tab');
+                    localStorage.setItem("etaj_id", numeHotelSelectat + '-' + $('#muta-etaje').val() + '-tab');
                     location.reload();
                 }
             })

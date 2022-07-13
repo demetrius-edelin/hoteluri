@@ -102,7 +102,7 @@
     <div class="col-sm-2 muta-toggle">
         <label for="muta-etaje" class="form-label">Etaj</label>
         <select id="muta-etaje" name="muta-etaje" class="form-select" >
-            @foreach($structuraHotel[1] as $numar => $etajArray)
+            @foreach($structuraHotel[env('ACTIVE_HOTEL_ID')] as $numar => $etajArray)
                 <option value="{{ $numar }}" @if($numar == $etaj)  selected @endif>
                     {{ $numar }}
                 </option>
@@ -112,7 +112,7 @@
     <div class="col-sm-2 muta-toggle">
         <label for="muta-camere" class="form-label">Camera</label>
         <select id="muta-camere" name="muta-camere" class="form-select" >
-            @foreach($structuraHotel[1][$etaj] as $numar => $cameraArray)
+            @foreach($structuraHotel[env('ACTIVE_HOTEL_ID')][$etaj] as $numar => $cameraArray)
                 <option value="{{ $numar }}" @if($numar == $camera)  selected @endif>
                     {{ $numar }}
                 </option>
@@ -122,7 +122,7 @@
     <div class="col-sm-2 muta-toggle">
         <label for="muta-locuri" class="form-label">Loc</label>
         <select id="muta-locuri" name="muta-locuri" class="form-select" >
-            @for($i = 0; $i < $structuraHotel[1][$etaj][$camera]; $i++)
+            @for($i = 0; $i < $structuraHotel[env('ACTIVE_HOTEL_ID')][$etaj][$camera]; $i++)
                 <option value="{{ $i }}" @if($i == $loc)  selected @endif>
                     {{ $i + 1 }}
                 </option>

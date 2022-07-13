@@ -919,8 +919,639 @@ class Data
                     ]
                 ]
             ]
+        ],
+        'Lotus' => [
+            'id' => 2,
+            'etaje' => [
+                '-1' => [
+                    'x' => 7,
+                    'y' => 39,
+                    'camere' => [
+                        '15' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 1,
+                            'y_end' => 7
+                        ],
+                        '16' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 7,
+                            'y_end' => 13
+                        ],
+                        '17' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 13,
+                            'y_end' => 19
+                        ],
+                        '1' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 20,
+                            'y_end' => 26
+                        ],
+                        '2' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 26,
+                            'y_end' => 32
+                        ],
+                        '3' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 32,
+                            'y_end' => 38
+                        ],
+                        '14' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 1,
+                            'y_end' => 4
+                        ],
+                        '13' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 4,
+                            'y_end' => 7
+                        ],
+                        '12' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 7,
+                            'y_end' => 10
+                        ],
+                        '11' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 10,
+                            'y_end' => 13
+                        ],
+                        '10' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 13,
+                            'y_end' => 16
+                        ],
+                        '9' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 16,
+                            'y_end' => 19
+                        ],
+                        '8' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 19,
+                            'y_end' => 21
+                        ],
+                        '7' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 21,
+                            'y_end' => 24
+                        ],
+                        '6' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 24,
+                            'y_end' => 27
+                        ],
+                        '5' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 27,
+                            'y_end' => 30
+                        ],
+                        '4' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 30,
+                            'y_end' => 33
+                        ]
+                    ]
+                ],
+                '1' => [
+                    'x' => 7,
+                    'y' => 39,
+                    'camere' => [
+                        '115' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 1,
+                            'y_end' => 7
+                        ],
+                        '116' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 7,
+                            'y_end' => 13
+                        ],
+                        '117' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 13,
+                            'y_end' => 19
+                        ],
+                        '101' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 20,
+                            'y_end' => 26
+                        ],
+                        '102' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 26,
+                            'y_end' => 32
+                        ],
+                        '103' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 32,
+                            'y_end' => 38
+                        ],
+                        '114' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 1,
+                            'y_end' => 4
+                        ],
+                        '113' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 4,
+                            'y_end' => 7
+                        ],
+                        '112' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 7,
+                            'y_end' => 10
+                        ],
+                        '111' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 10,
+                            'y_end' => 13
+                        ],
+                        '110' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 13,
+                            'y_end' => 16
+                        ],
+                        '109' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 16,
+                            'y_end' => 19
+                        ],
+                        '108' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 19,
+                            'y_end' => 21
+                        ],
+                        '107' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 21,
+                            'y_end' => 24
+                        ],
+                        '106' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 24,
+                            'y_end' => 27
+                        ],
+                        '105' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 27,
+                            'y_end' => 30
+                        ],
+                        '104' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 30,
+                            'y_end' => 33
+                        ]
+                    ]
+                ],
+                '2' => [
+                    'x' => 7,
+                    'y' => 39,
+                    'camere' => [
+                        '215' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 1,
+                            'y_end' => 7
+                        ],
+                        '216' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 7,
+                            'y_end' => 13
+                        ],
+                        '217' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 13,
+                            'y_end' => 19
+                        ],
+                        '201' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 20,
+                            'y_end' => 26
+                        ],
+                        '202' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 26,
+                            'y_end' => 32
+                        ],
+                        '203' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 32,
+                            'y_end' => 38
+                        ],
+                        '214' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 1,
+                            'y_end' => 4
+                        ],
+                        '213' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 4,
+                            'y_end' => 7
+                        ],
+                        '212' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 7,
+                            'y_end' => 10
+                        ],
+                        '211' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 10,
+                            'y_end' => 13
+                        ],
+                        '210' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 13,
+                            'y_end' => 16
+                        ],
+                        '209' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 16,
+                            'y_end' => 19
+                        ],
+                        '208' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 19,
+                            'y_end' => 21
+                        ],
+                        '207' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 21,
+                            'y_end' => 24
+                        ],
+                        '206' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 24,
+                            'y_end' => 27
+                        ],
+                        '205' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 27,
+                            'y_end' => 30
+                        ],
+                        '204' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 30,
+                            'y_end' => 33
+                        ]
+                    ]
+                ],
+                '3' => [
+                    'x' => 7,
+                    'y' => 39,
+                    'camere' => [
+                        '315' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 1,
+                            'y_end' => 7
+                        ],
+                        '316' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 7,
+                            'y_end' => 13
+                        ],
+                        '317' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 13,
+                            'y_end' => 19
+                        ],
+                        '301' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 20,
+                            'y_end' => 26
+                        ],
+                        '302' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 26,
+                            'y_end' => 32
+                        ],
+                        '303' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 32,
+                            'y_end' => 38
+                        ],
+                        '314' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 1,
+                            'y_end' => 4
+                        ],
+                        '313' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 4,
+                            'y_end' => 7
+                        ],
+                        '312' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 7,
+                            'y_end' => 10
+                        ],
+                        '311' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 10,
+                            'y_end' => 13
+                        ],
+                        '310' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 13,
+                            'y_end' => 16
+                        ],
+                        '309' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 16,
+                            'y_end' => 19
+                        ],
+                        '308' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 19,
+                            'y_end' => 21
+                        ],
+                        '307' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 21,
+                            'y_end' => 24
+                        ],
+                        '306' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 24,
+                            'y_end' => 27
+                        ],
+                        '305' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 27,
+                            'y_end' => 30
+                        ],
+                        '304' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 30,
+                            'y_end' => 33
+                        ]
+                    ]
+                ],
+                '4' => [
+                    'x' => 7,
+                    'y' => 39,
+                    'camere' => [
+                        '415' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 1,
+                            'y_end' => 7
+                        ],
+                        '416' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 7,
+                            'y_end' => 13
+                        ],
+                        '417' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 13,
+                            'y_end' => 19
+                        ],
+                        '401' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 20,
+                            'y_end' => 26
+                        ],
+                        '402' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 26,
+                            'y_end' => 32
+                        ],
+                        '403' => [
+                            'locuri' => 6,
+                            'x_start' => 1,
+                            'x_end' => 4,
+                            'y_start' => 32,
+                            'y_end' => 38
+                        ],
+                        '414' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 1,
+                            'y_end' => 4
+                        ],
+                        '413' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 4,
+                            'y_end' => 7
+                        ],
+                        '412' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 7,
+                            'y_end' => 10
+                        ],
+                        '411' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 10,
+                            'y_end' => 13
+                        ],
+                        '410' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 13,
+                            'y_end' => 16
+                        ],
+                        '409' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 16,
+                            'y_end' => 19
+                        ],
+                        '408' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 19,
+                            'y_end' => 21
+                        ],
+                        '407' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 21,
+                            'y_end' => 24
+                        ],
+                        '406' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 24,
+                            'y_end' => 27
+                        ],
+                        '405' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 27,
+                            'y_end' => 30
+                        ],
+                        '404' => [
+                            'locuri' => 3,
+                            'x_start' => 5,
+                            'x_end' => 8,
+                            'y_start' => 30,
+                            'y_end' => 33
+                        ]
+                    ]
+                ],
+            ]
         ]
     ];
+
 
     public static function getStructure()
     {
@@ -933,6 +1564,10 @@ class Data
 
         $hotels = [];
         foreach (self::$hoteluri as $hotelName => $hotelContent) {
+            if ($hotelContent['id'] != env('ACTIVE_HOTEL_ID')) {
+                continue;
+            }
+
             $hotelTotalLocuri = 0;
             $hotelOcupareLocuri = 0;
             $hotelOcupareLocuriGratuite = 0;

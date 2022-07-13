@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <title>Hotel Rai</title>
+    <title>Hotel {{ array_values($hotels)[0]->getNume() }}</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/magnific-popup.css">
     <link id="bsdp-css" href="css/bootstrap-datepicker3.min.css" rel="stylesheet">
@@ -13,6 +13,8 @@
     <script src="js/jquery.magnific-popup.min.js"></script>
     <script>
        var ziuaCurenta = "{{ $ziuaCurenta }}";
+       var hotelSelectat = {{ env('ACTIVE_HOTEL_ID') }};
+       var numeHotelSelectat = "{{ array_values($hotels)[0]->getNume() }}";
     </script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
