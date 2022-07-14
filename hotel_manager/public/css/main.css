@@ -141,3 +141,12 @@
 .taburile {
     margin-bottom: 50px;
 }
+
+input[name="db"] {
+    max-width: 260px;
+}
+
+#upload-form {
+    border: 1px solid #ccc;
+    padding-top: 12px;
+}

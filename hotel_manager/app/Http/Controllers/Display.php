@@ -12,14 +12,15 @@ class Display extends Controller
             session(['ziuaCurenta' => date('Y-m-d')]);
         }
 
-        $backupFile = storage_path('logs\hoteluri_' . date("Y-m-d") . '.sql');
-        if (!file_exists($backupFile)) {
-            $command = "mysqldump --opt -h " . env('DB_HOST') . " -u " . env('DB_USERNAME') . " -p" . env('DB_PASSWORD') . " hoteluri > $backupFile";
-            exec($command);
+        $backupFile = storage_path('backups\database.sqlite');
+        if (!is_dir(storage_path('backups'))) {
+            mkdir(storage_path('backups'));
         }
 
+        copy(env('DB_DATABASE'), $backupFile);
+
         if (env('BACKUP_EXTERNAL') == 'true') {
-            $backupDBHdd = env('BACKUP_PATH') . '\hoteluri_' . date("Y-m-d") . '.sql';
+            $backupDBHdd = env('BACKUP_PATH') . '\database_' . date("Y-m-d") . '.sqlite';
             $backupDBCsvHdd = env('BACKUP_PATH') . '\exporta_ziua_' . date("Y-m-d") . '.csv';
             $backupLogsHdd = env('BACKUP_PATH') . '\actiuni.log';
 

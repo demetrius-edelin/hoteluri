@@ -517,4 +517,28 @@ class Form extends Controller
 
         return response()->download($filename, 'export.csv', $headers);
     }
+
+
+    public function exportaDB(Request $request)
+    {
+        $filename = env('DB_DATABASE');
+
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+
+        return response()->download($filename, 'database.sqlite', $headers);
+    }
+
+    public function uploadDB(Request $request) {
+        $file = $request->file('db');
+
+        //Move Uploaded File
+        $destinationPath = preg_replace('/\\\database.sqlite$/', '', env('DB_DATABASE'));
+
+        $file->move($destinationPath, $file->getClientOriginalName());
+
+        header('Location: /');
+        die();
+    }
 }

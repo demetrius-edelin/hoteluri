@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [Display::class, 'show']);
 Route::get('/exportaZiua', [Form::class, 'exportaZiua']);
+Route::get('/exportaDB', [Form::class, 'exportaDB']);
+Route::post('/uploadDB', [Form::class, 'uploadDB']);
 Route::post('/getOcupare', [Form::class, 'getOcupare']);
 Route::post('/salvareOcupare', [Form::class, 'salvareOcupare']);
 Route::post('/stergereOcupare', [Form::class, 'stergereOcupare']);

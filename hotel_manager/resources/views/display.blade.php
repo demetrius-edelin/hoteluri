@@ -27,11 +27,22 @@
         <div class="col-sm-2" id="filtru-data-container">
             <input type="text" class="form-control" id="filtru-data" readonly>
         </div>
-        <div class="col-sm-7"></div>
-        <div class="col-sm-2">
+
+        <div class="col-sm-4" style="text-align: right; padding-top: 12px">
             <a href="\exportaZiua" id="button-export"
                     class="btn btn-sm btn-info">Exportă ziua
             </a>
+            <a href="\exportaDB" id="button-export"
+               class="btn btn-sm btn-light" style="border: 1px solid #555;">Exportă DB
+            </a>
+        </div>
+        <div class="col-sm-5" id="upload-form">
+            <?php
+            echo Form::open(array('url' => '/uploadDB','files'=>'true'));
+            echo Form::file('db');
+            echo Form::submit('Importă DB');
+            echo Form::close();
+            ?>
         </div>
     </div>
 
