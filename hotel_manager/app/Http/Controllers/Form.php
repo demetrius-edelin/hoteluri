@@ -534,7 +534,7 @@ class Form extends Controller
         $file = $request->file('db');
 
         //Move Uploaded File
-        $destinationPath = preg_replace('/\\\database.sqlite$/', '', env('DB_DATABASE'));
+        $destinationPath = preg_replace('|/database.sqlite$|', '', preg_replace('/\\\database.sqlite$/', '', env('DB_DATABASE')));
 
         $file->move($destinationPath, $file->getClientOriginalName());
 

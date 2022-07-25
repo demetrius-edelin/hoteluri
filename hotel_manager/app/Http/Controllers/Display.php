@@ -12,7 +12,7 @@ class Display extends Controller
             session(['ziuaCurenta' => date('Y-m-d')]);
         }
 
-        $backupFile = storage_path('backups\database.sqlite');
+        $backupFile = storage_path('backups' . DIRECTORY_SEPARATOR . 'database_' . date("Y-m-d") . '.sqlite');
         if (!is_dir(storage_path('backups'))) {
             mkdir(storage_path('backups'));
         }
