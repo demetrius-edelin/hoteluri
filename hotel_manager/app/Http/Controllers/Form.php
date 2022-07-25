@@ -621,7 +621,7 @@ class Form extends Controller
         $data = '<option value="" disabled selected>-- selecteaza --</option>';
 
         try {
-            $persoane = DB::select('select * from persoane');
+            $persoane = DB::select('select * from persoane p join ocupare o on o.persoana_id = p.id where o.hotel_id = ' . env('ACTIVE_HOTEL_ID') . ' group by p.id');
             foreach ($persoane as $persoana) {
                 $data .= '<option value=\'' . $persoana->id . '\'>' . $persoana->nume . ' ' . $persoana->prenume . '</option>';
             }
