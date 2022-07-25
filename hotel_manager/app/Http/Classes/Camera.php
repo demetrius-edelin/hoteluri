@@ -76,8 +76,8 @@ class Camera
     public function adaugaOcupant(Ocupant $ocupant, $loc, $tip, $achitat, $perioada_start, $perioada_end)
     {
         if (count($this->ocupanti) < $this->numar) {
-            $dataStartObj = new DateTime($perioada_start);
-            $dataEndObj = new DateTime($perioada_end);
+            $dataStartObj = new \DateTime($perioada_start);
+            $dataEndObj = new \DateTime($perioada_end);
             $dataEndObj->add(new \DateInterval('P1D'));
 
             $this->ocupanti[$loc] = [

@@ -163,6 +163,26 @@ $(document).ready(function() {
                         })
                 });
 
+                $("#button-copiaza-trimite").click(function () {
+                    $(".form-button").attr('disabled', 'disabled');
+                    $.post("copiaza", $("#form").serialize())
+                        .done(function (data) {
+                            const response = JSON.parse(data);
+                            if (response['status'] === 'failed') {
+                                alert('Ocupare eșuată. EROARE: ' +response['data']);
+                                $(".form-button").removeAttr('disabled');
+                            } else {
+                                $.magnificPopup.close();
+                                $(".overlay").show();
+                                localStorage.setItem("etaj_id", numeHotelSelectat + '-' + $('#muta-etaje').val() + '-tab');
+                                location.reload();
+                            }
+                        })
+                        .fail(function(error) {
+                            console.log( error );
+                        })
+                });
+
                 // schimbă selectia de camere și locuri la schimbare etaj [MUTĂ]
                 $("#muta-etaje").change(function() {
                     let camere = Object.keys(structuraHotel[hotelSelectat][$(this).val()]).sort(function(a, b) {
@@ -245,6 +265,7 @@ $(document).ready(function() {
     });
 
     $("#button-export").click(function () {
+        $(this).blur();
         $.post("exportaZiua")
             .done(function (data) {
                 const response = JSON.parse(data);
@@ -263,4 +284,38 @@ $(document).ready(function() {
             })
     });
 
+    $('.search-select').select2({
+        dropdownParent: $('#search-popup')
+    });
+
+    $("#button-search").click(function () {
+        $(this).blur();
+        var token = $("#token").attr('data-token');
+        let that = this;
+        $.post( "getPersoane", { _token: token } )
+            .done(function( data ) {
+                let info = JSON.parse(data);
+                document.getElementById('search-select').innerHTML = info['data'];
+                $('.select2-search__field').focus();
+                $.magnificPopup.open({
+                    items: {
+                        src: '#search-popup'
+                    },
+                    callbacks: {
+                        close: function() {
+                            location.reload();
+                        }
+                    },
+                    type: 'inline'
+                }, 0);
+
+                $('#search-select').on('change', function(e) {
+                    $.post( "getDatePersoana", { id: e.target.value, _token: token } )
+                        .done(function( data ) {
+                            let info = JSON.parse(data);
+                            document.getElementById('search-persoana-detalii').innerHTML = info['data'];
+                        });
+                });
+            });
+    });
 });

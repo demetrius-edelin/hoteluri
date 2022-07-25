@@ -11,6 +11,8 @@
     <script src="js/bootstrap-datepicker.min.js"></script>
     <script src="locales/bootstrap-datepicker.ro.min.js" charset="UTF-8"></script>
     <script src="js/jquery.magnific-popup.min.js"></script>
+    <link href="css/select2.min.css" rel="stylesheet" />
+    <script src="js/select2.min.js"></script>
     <script>
        var ziuaCurenta = "{{ $ziuaCurenta }}";
        var hotelSelectat = {{ env('ACTIVE_HOTEL_ID') }};
@@ -29,10 +31,13 @@
         </div>
 
         <div class="col-sm-4" style="text-align: right; padding-top: 12px">
+            <a href="#search-popup" id="button-search"
+               class="btn btn-sm btn-info">&#128270;
+            </a>
             <a href="\exportaZiua" id="button-export"
                     class="btn btn-sm btn-info">Exportă ziua
             </a>
-            <a href="\exportaDB" id="button-export"
+            <a href="\exportaDB" id="button-exportDB"
                class="btn btn-sm btn-light" style="border: 1px solid #555;">Exportă DB
             </a>
         </div>
@@ -112,6 +117,23 @@
         </main>
     </div>
 </div>
+
+<div id="search-popup" class="white-popup mfp-hide">
+    <div class="container" style="max-width: 780px;">
+        <main>
+            <div class="text-center mt-4 mb-5">
+                <h4 class="fw-bold">Cauta persoana</h4>
+                <select class="search-select" name="search" id="search-select"  style="width: 75%"></select>
+            </div>
+
+            <div class="row g-5 justify-content-center">
+                <div class="col-md-7 col-lg-12" id="search-persoana-detalii">
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
 <div class="overlay" style="display: none;">
     <div class="overlay__inner">
         <div class="overlay__content"><span class="spinner"></span></div>

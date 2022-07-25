@@ -505,6 +505,112 @@ class Form extends Controller
         ]);
     }
 
+    public function copiaza(Request $request)
+    {
+        $ocupare = [];
+        $ocupare["persoana_id"] = $request->input('persoana_id');
+        $ocupare["nume"] = $request->input('nume');
+        $ocupare["prenume"] = $request->input('prenume');
+        $ocupare["an_curs"] = $request->input('an_curs');
+        $ocupare["oras"] = $request->input('oras');
+        $ocupare["tara"] = $request->input('tara');
+        $ocupare["telefon"] = $request->input('telefon');
+        $ocupare["tip"] = $request->input('tip');
+        $ocupare["hotel"] = $request->input('hotel');
+        $ocupare["etaj"] = $request->input('etaj');
+        $ocupare["camera"] = $request->input('camera');
+        $ocupare["loc"] = $request->input('loc');
+        $ocupare["achitat"] = $request->input('achitat');
+        $ocupare["muta-etaje"] = $request->input('muta-etaje');
+        $ocupare["muta-camere"] = $request->input('muta-camere');
+        $ocupare["muta-locuri"] = $request->input('muta-locuri');
+        $ocupare["perioada_start"] = Data::convertHumanDateToDB($request->input('perioada_start'));
+        $ocupare["perioada_end"] = Data::convertHumanDateToDB($request->input('perioada_end'));
+
+        try {
+            // verificare loc liber
+            $ocupareIntervalDB = DB::select('select * from ocupare where hotel_id = ? and
+                            etaj_numar = ? and
+                            camera_numar = ? and
+                            loc = ? and
+                            (perioada_start <= ? and perioada_end >= ?) and
+                            persoana_id != ?', [
+                $ocupare['hotel'],
+                $ocupare['muta-etaje'],
+                $ocupare['muta-camere'],
+                $ocupare['muta-locuri'],
+                $ocupare["perioada_end"],
+                $ocupare["perioada_start"],
+                $ocupare['persoana_id']
+            ]);
+
+            if (count($ocupareIntervalDB) > 0) {
+                return json_encode([
+                    'status' => 'failed',
+                    'data' => 'Intervalul nu este liber!'
+                ]);
+            }
+
+//            DB::update('update persoane set
+//                    nume = ?,
+//                    prenume = ?,
+//                    an_curs = ?,
+//                    oras = ?,
+//                    tara = ?,
+//                    telefon = ?
+//                    where id = ?', [
+//                $ocupare['nume'],
+//                $ocupare['prenume'],
+//                $ocupare['an_curs'],
+//                $ocupare['oras'],
+//                $ocupare['tara'],
+//                $ocupare['telefon'],
+//                $ocupare['persoana_id']
+//            ]);
+
+//            DB::update('update ocupare set
+//                    tip = ?,
+//                    achitat = ?,
+//                    perioada_start = ?,
+//                    perioada_end = ?,
+//                    etaj_numar = ?,
+//                    camera_numar = ?,
+//                    loc = ?
+//                    where hotel_id = ? and
+//                    etaj_numar = ? and
+//                    camera_numar = ? and
+//                    loc = ? and
+//                    persoana_id = ?', [
+//                $ocupare['tip'],
+//                $ocupare['achitat'],
+//                $ocupare['perioada_start'],
+//                $ocupare['perioada_end'],
+//                $ocupare['muta-etaje'],
+//                $ocupare['muta-camere'],
+//                $ocupare['muta-locuri'],
+//                $ocupare['hotel'],
+//                $ocupare['etaj'],
+//                $ocupare['camera'],
+//                $ocupare['loc'],
+//                $ocupare['persoana_id']
+//            ]);
+
+            Log::channel('actiuni')->info('Mutare ocupare (si posibil update)', $ocupare);
+        } catch (\Exception $e) {
+            Log::channel('actiuni')->info('ERROARE! Mutare eșuată. ' . $e->getMessage(), $ocupare);
+
+            return json_encode([
+                'status' => 'failed',
+                'data' => $e->getMessage()
+            ]);
+        }
+
+        return json_encode([
+            'status' => 'success',
+            'data' => 1
+        ]);
+    }
+
     public function exportaZiua(Request $request)
     {
         Data::generareCsvZiua();
@@ -540,5 +646,71 @@ class Form extends Controller
 
         header('Location: /');
         die();
+    }
+
+    public function getPersoane() {
+        $data = '<option value="" disabled selected>-- selecteaza --</option>';
+
+        try {
+            $persoane = DB::select('select * from persoane');
+            foreach ($persoane as $persoana) {
+                $data .= '<option value=\'' . $persoana->id . '\'>' . $persoana->nume . ' ' . $persoana->prenume . '</option>';
+            }
+
+        } catch (\Exception $e) {
+            return json_encode([
+                'status' => 'failed',
+                'data' => 'Db Error'
+            ]);
+        }
+
+        return json_encode([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
+    public function getDatePersoana(Request $request) {
+        $data = '';
+
+        try {
+            $persoanaObj = DB::select('select * from persoane where id = ? limit 1', [$request->input('id')]);
+
+            $persoana = (array) $persoanaObj[0];
+            $ocupari = DB::select('select * from ocupare where persoana_id = ? and hotel_id = ?', [$request->input('id'), env('ACTIVE_HOTEL_ID')]);
+
+            $data .= 'Nume: <strong>' . $persoana['nume'] . '</strong><br>';
+            $data .= 'Prenume: <strong>' . $persoana['prenume'] . '</strong><br>';
+            $data .= 'An de curs: <strong>' . $persoana['an_curs'] . '</strong><br>';
+            $data .= 'Oras: <strong>' . $persoana['oras'] . '</strong><br>';
+            $data .= 'Tara: <strong>' . $persoana['tara'] . '</strong><br>';
+            $data .= 'Telefon: <strong>' . $persoana['telefon'] . '</strong><br>';
+
+            $data .= '<br><h4>Rezervari:</h4>';
+            foreach ($ocupari as $ocupare) {
+                $data .= '- Etaj ' . $ocupare->etaj_numar . '; Camera ' . $ocupare->camera_numar . '; Loc ' . $ocupare->loc . '; ';
+                $data .= 'Tip: ' . $ocupare->tip . '; Achitat: ' . ($ocupare->achitat == 0 ? 'nu' : 'da') . '<br>&nbsp;&nbsp;&nbsp;Perioada: <strong>';
+                $data .= Data::convertDBDateToHuman($ocupare->perioada_start) . ' - ' . Data::convertDBDateToHuman($ocupare->perioada_end);
+
+                $dataStartObj = new \DateTime($ocupare->perioada_start);
+                $dataEndObj = new \DateTime($ocupare->perioada_end);
+                $dataEndObj->add(new \DateInterval('P1D'));
+
+                $data .= '</strong> (plecare pe ' . $dataEndObj->format('d.m.Y') . '); Durata: ' . $dataEndObj->diff($dataStartObj)->days . ' zile<br><br>';
+            }
+
+            $data .= '<br>';
+
+        } catch (\Exception $e) {
+            return json_encode([
+                'status' => 'failed',
+                'data' => $e->getMessage()
+            ]);
+        }
+
+        return json_encode([
+            'status' => 'success',
+            'data' => $data
+        ]);
     }
 }

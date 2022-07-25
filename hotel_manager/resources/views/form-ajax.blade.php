@@ -85,7 +85,7 @@
                 </button>
             @endif
             <button type="button" id="button-muta"
-                    class="form-button col-sm-2 btn btn-info btn-sm fw-bold me-2 mt-4">Mută
+                    class="form-button col-sm-2 btn btn-info btn-sm fw-bold me-2 mt-4">Mută/Copiază
             </button>
             <button type="button" id="button-delete"
                     class="form-button col-sm-2 btn btn-danger btn-sm fw-bold me-2 mt-4">Șterge
@@ -129,9 +129,14 @@
             @endfor
         </select>
     </div>
-    <div class="col-sm-2 muta-toggle position-relative">
+    <div class="col-sm-1 muta-toggle position-relative">
         <button type="button" id="button-muta-trimite"
-                class="form-button btn btn-info btn-sm fw-bold position-absolute bottom-0 start-0 mb-1">Mută acum
+                class="form-button btn btn-info btn-sm fw-bold position-absolute bottom-0 start-0 mb-1">&nbsp;Mută&nbsp;
+        </button>
+    </div>
+    <div class="col-sm-1 muta-toggle position-relative">
+        <button type="button" id="button-copiaza-trimite"
+                class="form-button btn btn-info btn-sm fw-bold position-absolute bottom-0 start-0 mb-1">Copiază
         </button>
     </div>
 </div>
