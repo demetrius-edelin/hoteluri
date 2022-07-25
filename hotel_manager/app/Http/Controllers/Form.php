@@ -551,53 +551,22 @@ class Form extends Controller
                 ]);
             }
 
-//            DB::update('update persoane set
-//                    nume = ?,
-//                    prenume = ?,
-//                    an_curs = ?,
-//                    oras = ?,
-//                    tara = ?,
-//                    telefon = ?
-//                    where id = ?', [
-//                $ocupare['nume'],
-//                $ocupare['prenume'],
-//                $ocupare['an_curs'],
-//                $ocupare['oras'],
-//                $ocupare['tara'],
-//                $ocupare['telefon'],
-//                $ocupare['persoana_id']
-//            ]);
+            DB::update('insert into ocupare (hotel_id, etaj_numar, camera_numar, loc, tip, persoana_id, achitat, perioada_start, perioada_end) values (
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $ocupare['hotel'],
+                $ocupare['muta-etaje'],
+                $ocupare['muta-camere'],
+                $ocupare['muta-locuri'],
+                $ocupare['tip'],
+                $ocupare['persoana_id'],
+                $ocupare['achitat'],
+                $ocupare['perioada_start'],
+                $ocupare['perioada_end']
+            ]);
 
-//            DB::update('update ocupare set
-//                    tip = ?,
-//                    achitat = ?,
-//                    perioada_start = ?,
-//                    perioada_end = ?,
-//                    etaj_numar = ?,
-//                    camera_numar = ?,
-//                    loc = ?
-//                    where hotel_id = ? and
-//                    etaj_numar = ? and
-//                    camera_numar = ? and
-//                    loc = ? and
-//                    persoana_id = ?', [
-//                $ocupare['tip'],
-//                $ocupare['achitat'],
-//                $ocupare['perioada_start'],
-//                $ocupare['perioada_end'],
-//                $ocupare['muta-etaje'],
-//                $ocupare['muta-camere'],
-//                $ocupare['muta-locuri'],
-//                $ocupare['hotel'],
-//                $ocupare['etaj'],
-//                $ocupare['camera'],
-//                $ocupare['loc'],
-//                $ocupare['persoana_id']
-//            ]);
-
-            Log::channel('actiuni')->info('Mutare ocupare (si posibil update)', $ocupare);
+            Log::channel('actiuni')->info('Copiere ', $ocupare);
         } catch (\Exception $e) {
-            Log::channel('actiuni')->info('ERROARE! Mutare eșuată. ' . $e->getMessage(), $ocupare);
+            Log::channel('actiuni')->info('ERROARE! Copiere eșuată. ' . $e->getMessage(), $ocupare);
 
             return json_encode([
                 'status' => 'failed',
