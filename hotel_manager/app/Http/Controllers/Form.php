@@ -709,6 +709,9 @@ class Form extends Controller
 
         foreach ($ocupari as $ocupare) {
             $availabilityArray = $this->getAvailabilityArray($structuraHotel[$ocupare->hotel_id][$ocupare->etaj_numar][$ocupare->camera_numar][$ocupare->loc]);
+            if ($availabilityArray == []) {
+                continue;
+            }
 
             $ocupareStart = new \DateTime($ocupare->perioada_start);
             $ocupareEnd   = new \DateTime($ocupare->perioada_end);
@@ -783,6 +786,10 @@ class Form extends Controller
 
     private function getAvailabilityArray($string) {
         // exemplu: $string = '28.07.2022 - 29.07.2022; 01.08.2022 - 03.08.2022';
+        if ($string == '') {
+            return [];
+        }
+
         $intervals = explode('; ', $string);
 
         $availability = [];
