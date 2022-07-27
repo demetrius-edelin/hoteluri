@@ -303,7 +303,7 @@ $(document).ready(function() {
                     },
                     callbacks: {
                         close: function() {
-                            location.reload();
+                            // location.reload();
                         }
                     },
                     type: 'inline'
@@ -318,4 +318,52 @@ $(document).ready(function() {
                 });
             });
     });
+
+
+    $("#button-available").click(function () {
+        $(this).blur();
+
+        var token = $("#token").attr('data-token');
+        let that = this;
+
+        $('.input-daterange').datepicker({
+            format: "dd.mm.yyyy",
+            todayBtn: "linked",
+            language: "ro",
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $.magnificPopup.open({
+            items: {
+                src: '#available-popup'
+            },
+            callbacks: {
+                close: function() {
+                    console.log('close');
+                    $('#display-availability').html('');
+                }
+            },
+            type: 'inline'
+        }, 0);
+
+        $('#button-export-available-d').click(function () {
+            let start = $('#availability_perioada_start')[0].value;
+            let end   = $('#availability_perioada_end')[0].value;
+
+            $.get( "exportLocuriLibere", { start: start, end: end, d: 0 } )
+                .done(function( data ) {
+                    console.log(data);
+                    $('#display-availability').html(data);
+                });
+        });
+
+        $('#button-export-available-e').click(function () {
+            let start = $('#availability_perioada_start')[0].value;
+            let end   = $('#availability_perioada_end')[0].value;
+
+            window.location.href = "/exportLocuriLibere?start=" + start + "&end=" + end + "&d=1";
+        });
+
+    })
 });

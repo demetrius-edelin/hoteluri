@@ -29,3 +29,4 @@ Route::post('/modificaZiuaCurenta', [Form::class, 'modificaZiuaCurenta']);
 Route::post('/getDateRangeLoc', [Form::class, 'getDateRangeLoc']);
 Route::post('/getPersoane', [Form::class, 'getPersoane']);
 Route::post('/getDatePersoana', [Form::class, 'getDatePersoana']);
+Route::get('/exportLocuriLibere', [Form::class, 'exportLocuriLibere']);

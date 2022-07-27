@@ -31,9 +31,12 @@
         </div>
 
         <div class="col-sm-4" style="text-align: right; padding-top: 12px">
-            <a href="#search-popup" id="button-search"
+            <span id="button-available"
+               class="btn btn-sm btn-info">&#9706;
+            </span>
+            <span id="button-search"
                class="btn btn-sm btn-info">&#128270;
-            </a>
+            </span>
             <a href="\exportaZiua" id="button-export"
                     class="btn btn-sm btn-info">Exportă ziua
             </a>
@@ -129,6 +132,38 @@
             <div class="row g-5 justify-content-center">
                 <div class="col-md-7 col-lg-12" id="search-persoana-detalii">
                 </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div id="available-popup" class="white-popup mfp-hide">
+    <div class="container" style="max-width: 780px;">
+        <main>
+            <div class="text-center mt-4 mb-5">
+                <h4 class="fw-bold">Export locuri libere în intervalul selectat</h4>
+            </div>
+
+            <div class="col-sm-6">
+                <label for="datepicker" class="form-label">Perioada (începutul zilelor de cazare):</label>
+                <div class="input-daterange input-group" id="datepicker">
+                    <span class="input-group-addon">De la&nbsp;&nbsp;</span>
+                    <input type="text" class="w-25 form-control" id="availability_perioada_start" name="availability_perioada_start"
+                           value=""/>
+                    <span class="input-group-addon">&nbsp;&nbsp;pana la&nbsp;&nbsp;</span>
+                    <input type="text" class="w-25 form-control" id="availability_perioada_end" name="availability_perioada_end"
+                           value=""/>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button id="button-export-available-d" class="form-button col-sm-2 btn btn-primary btn-sm fw-bold me-2 mt-4">
+                    Afiseaza
+                </button>
+                <button id="button-export-available-e" class="form-button col-sm-2 btn btn-primary btn-sm fw-bold me-2 mt-4">
+                    Exporta
+                </button>
+            </div>
+            <div class="col-sm-12" id="display-availability">
             </div>
         </main>
     </div>

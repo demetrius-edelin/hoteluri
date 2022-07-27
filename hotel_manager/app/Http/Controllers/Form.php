@@ -682,4 +682,142 @@ class Form extends Controller
             'data' => $data
         ]);
     }
+
+    public function exportLocuriLibere(Request $request) {
+        $hotels = session('structura');
+
+        $start = $request->input('start');
+        $end   = $request->input('end');
+
+        $structuraHotel = [];
+        foreach ($hotels as $hotel) {
+            foreach ($hotels[$hotel->getId()]->getEtaje() as $etaj) {
+                foreach ($etaj->getCamere(0) as $camera) {
+                    for ($i = 0; $i < $camera->getLocuri(); $i++) {
+                        $structuraHotel[$hotel->getId()][$etaj->getNumar()][$camera->getNumar()][$i] = $start . ' - ' . $end;
+                    }
+                }
+            }
+            foreach ($structuraHotel[$hotel->getId()] as $etajNumar => $etajUnsorted) {
+                ksort($etajUnsorted);
+                $structuraHotel[$hotel->getId()][$etajNumar] = $etajUnsorted;
+            }
+        }
+
+        $ocupari = DB::select('select * from ocupare where hotel_id = ' . env('ACTIVE_HOTEL_ID') . ' and (perioada_start <= ' . Data::convertHumanDateToDB($end) . ' or perioada_end >= ' . Data::convertHumanDateToDB($start) . ')');
+
+
+        foreach ($ocupari as $ocupare) {
+            $availabilityArray = $this->getAvailabilityArray($structuraHotel[$ocupare->hotel_id][$ocupare->etaj_numar][$ocupare->camera_numar][$ocupare->loc]);
+
+            $ocupareStart = new \DateTime($ocupare->perioada_start);
+            $ocupareEnd   = new \DateTime($ocupare->perioada_end);
+
+            foreach ($availabilityArray as $key => $interval) {
+                // check if not in interval
+                if ($interval['start'] > $ocupareEnd || $interval['end'] < $ocupareStart) {
+                    continue;
+                }
+
+                if ($interval['start'] >= $ocupareStart && $interval['end'] > $ocupareEnd) {
+                    $availabilityArray[$key]['start'] = $ocupareEnd->add(new \DateInterval('P1D'));
+                    break;
+                }
+
+                if ($interval['start'] >= $ocupareStart && $interval['end'] <= $ocupareEnd) {
+                    unset($availabilityArray[$key]);
+                    break;
+                }
+
+                if ($interval['start'] < $ocupareStart && $interval['end'] <= $ocupareEnd) {
+                    $availabilityArray[$key]['end'] = $ocupareStart->sub(new \DateInterval('P1D'));
+                    break;
+                }
+
+
+                if ($interval['start'] < $ocupareStart && $interval['end'] > $ocupareEnd) {
+                    $newInterval = [
+                        'start' => $ocupareEnd->add(new \DateInterval('P1D')),
+                        'end'   => $availabilityArray[$key]['end']
+                    ];
+
+                    $availabilityArray[$key]['end'] = $ocupareStart->sub(new \DateInterval('P1D'));
+
+                    // insert the new element
+                    $availabilityArray = array_merge(array_slice($availabilityArray, 0, $key + 1), array($newInterval), array_slice($availabilityArray, $key + 1));
+                    break;
+                }
+            }
+
+            $structuraHotel[$ocupare->hotel_id][$ocupare->etaj_numar][$ocupare->camera_numar][$ocupare->loc] = $this->getStringFromAvailability($availabilityArray);
+        }
+
+        if ($request->input('d') == 0) {
+            return $this->pp($structuraHotel[env('ACTIVE_HOTEL_ID')]);
+        } else {
+
+            $filename = storage_path('logs/export_locuri_libere.csv');
+
+            $fp = fopen($filename, 'w');
+            fputcsv($fp, ['Etaj', 'Camera', 'Loc', 'Disponibilitate']);
+
+            foreach ($structuraHotel as $hotel_id => $hotel) {
+                foreach ($hotel as $etaj_numar => $etaj) {
+                    foreach ($etaj as $camera_numar => $camera) {
+                        foreach ($camera as $loc_numar => $disponibil) {
+                            fputcsv($fp, [$etaj_numar, $camera_numar, $loc_numar, $disponibil]);
+
+                        }
+                    }
+                }
+            }
+            fclose($fp);
+
+            $headers = array(
+                'Content-Type' => 'text/csv',
+            );
+
+            return response()->download($filename, 'export_locuri_libere_' . $request->input('start'). '-' . $request->input('end'). '.csv', $headers);
+        }
+    }
+
+    private function getAvailabilityArray($string) {
+        // exemplu: $string = '28.07.2022 - 29.07.2022; 01.08.2022 - 03.08.2022';
+        $intervals = explode('; ', $string);
+
+        $availability = [];
+        foreach ($intervals as $interval) {
+           $dates = explode(' - ', $interval);
+           $availability[] = [
+               'start' => new \DateTime($dates[0]),
+               'end'   => new \DateTime($dates[1])
+           ];
+        }
+
+        return $availability;
+    }
+
+    private function getStringFromAvailability($avArray) {
+        $intervalsArray = [];
+        foreach ($avArray as $item) {
+            $intervalsArray[] = $item['start']->format('d.m.Y') . ' - ' . $item['end']->format('d.m.Y');
+        }
+
+        return implode('; ', $intervalsArray);
+    }
+
+    private function pp($arr){
+        $retStr = '<br><br><ul>';
+        if (is_array($arr)){
+            foreach ($arr as $key=>$val){
+                if (is_array($val)){
+                    $retStr .= '<li>' . $key . ' => ' . $this->pp($val) . '</li>';
+                }else{
+                    $retStr .= '<li>' . $key . ' => ' . $val . '</li>';
+                }
+            }
+        }
+        $retStr .= '</ul>';
+        return $retStr;
+    }
 }
